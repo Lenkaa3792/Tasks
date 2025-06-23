@@ -1,0 +1,33 @@
+buildscript {
+    ext.kotlin_version = '1.9.23' // Use a version compatible with your Android Gradle Plugin
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.2.0' // Check for latest stable version
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        // Google services plugin for Firebase (if you decide to use Firebase for Google Sign-In or other features)
+        // classpath 'com.google.gms:google-services:4.4.1' // Check for latest version
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
